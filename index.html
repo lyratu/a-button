@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      html {
+        background-color: #fcfcfa;
+      }
+      .box {
+        left: 50%;
+        top: 50%;
+        border-radius: 12px;
+        position: absolute;
+        display: inline-block;
+        padding: 50px 80px;
+        border: 1px solid #e2e2e2;
+        transform: translate(-50%, -50%);
+      }
+      .panel {
+        padding: 4px;
+        display: flex;
+        position: relative;
+        background-color: rgb(214, 214, 214);
+        border-radius: 14px;
+        box-shadow: rgba(0, 0, 0, 0.15) 2px 3px 2px 0px inset;
+      }
+      .panel > div {
+        flex: 1;
+        width: 60px;
+        height: 130px;
+        position: relative;
+      }
+      .middle {
+        cursor: pointer;
+        position: relative;
+        background: linear-gradient(
+          rgb(255, 255, 255) 0%,
+          rgb(250, 246, 242) 15.7374%,
+          rgb(179, 179, 179) 86.2162%,
+          rgb(171, 171, 171) 101.802%
+        );
+      }
+      .middle .bg {
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: calc(100% + 1px);
+        position: absolute;
+        filter: blur(1px);
+      }
+      .middle .topLine {
+        z-index: 1;
+        top: 12px;
+        filter: blur(.8px);
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: #ffffff;
+      }
+      .middle .point {
+        width: 6px;
+        height: 6px;
+        z-index: 1;
+        left: 50%;
+        top: 30px;
+        position: absolute;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .middle .bottomLine {
+        z-index: 1;
+        bottom: 0;
+        width: 100%;
+        position: absolute;
+        background-color: #d6d6d6;
+      }
+      .bottomLine-up {
+        animation: bottomLine-up 0.5s linear forwards infinite alternate paused;
+      }
+      .topLine-down {
+        animation: topLine-down 0.5s linear forwards infinite alternate paused;
+      }
+      .point-down {
+        animation: point-down 0.5s linear forwards infinite alternate paused;
+      }
+      .btn {
+        animation: btn 0.5s linear forwards infinite alternate paused;
+      }
+      @keyframes bottomLine-up {
+        from {
+          height: 0;
+        }
+        to {
+          height: 12px;
+        }
+      }
+      @keyframes topLine-down {
+        from {
+          top: 12px;
+        }
+        to {
+          top: 0px;
+          opacity: 0;
+        }
+      }
+      @keyframes point-down {
+        from {
+          top: 30px;
+          background-color: #ff611a;
+        }
+        to {
+          top: 14px;
+          background-color: #cfcfcf;
+        }
+      }
+      @keyframes btn {
+        from {
+          background: linear-gradient(
+            rgb(242, 241, 240) 0%,
+            rgb(235, 233, 232) 100%
+          );
+        }
+        to {
+          box-shadow: rgba(0, 0, 0, 0.1) 7px 11px 12px 0px,
+            rgba(0, 0, 0, 0.15) 4px 4px 4px 0px;
+
+          background: linear-gradient(
+            rgb(235, 233, 232) 0%,
+            rgb(242, 241, 240) 100%
+          );
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="panel">
+        <div class="left"></div>
+        <div class="middle">
+          <div class="bottomLine"></div>
+          <div class="topLine"></div>
+          <div class="point"></div>
+          <div class="bg"></div>
+        </div>
+        <div class="right"></div>
+      </div>
+    </div>
+  </body>
+  <script>
+    let flag = false;
+    const bg = document.querySelector(".bg");
+    const topLine = document.querySelector(".topLine");
+    const bottomLine = document.querySelector(".bottomLine");
+    const point = document.querySelector(".point");
+    bg.classList.add("btn");
+    topLine.classList.add("topLine-down");
+    bottomLine.classList.add("bottomLine-up");
+    point.classList.add("point-down");
+
+    bg.onclick = () => {
+      bg.style.animationPlayState = "running";
+      topLine.style.animationPlayState = "running";
+      bottomLine.style.animationPlayState = "running";
+      point.style.animationPlayState = "running";
+    };
+    let playCount = 0;
+    bg.addEventListener("animationiteration", () => {
+      playCount++;
+      if (playCount % 1 == 0) {
+        var audio = new Audio("./audio/tap.wav");
+        audio.playbackRate = 1.8;
+        audio.play();
+        bg.style.animationPlayState = "paused";
+        topLine.style.animationPlayState = "paused";
+        bottomLine.style.animationPlayState = "paused";
+        point.style.animationPlayState = "paused";
+      }
+    });
+  </script>
+</html>
